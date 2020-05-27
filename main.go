@@ -24,6 +24,7 @@ type Client struct {
 	socket net.Conn
 	data   chan []byte
 }
+
 func fmtDuration(d time.Duration) string {
 	d = d.Round(time.Minute)
 	h := d / time.Hour
@@ -78,16 +79,19 @@ func (manager *ClientManager) receive(client *Client) {
 	}
 }
 
-func (manager *ClientManager)analyze(source *Client, message []byte) {
-	listener := r2queryListener {}
+func (manager *ClientManager) analyze(source *Client, message []byte) {
+	listener := r2queryListener{}
 
 	modTime := time.Now()
 	listener.execute(string(message))
 	since := time.Since(modTime)
-	strDuration := fmt.Sprintln ("\"duration\":\"", since, "\"")
+	strDuration := fmt.Sprint("\"duration\":\"", since, "\"")
+	strCount := fmt.Sprintln("\"count\":", len(listener.result))
 	source.data <- []byte("{" +
-		"\"messages\": [\n"+ strings.Join(listener.messages,",\n")+ "\n],\n " +
-		"\"data\": [\n"+ strings.Join(listener.result,",\n")+ "\n],\n "+strDuration+ "}\n")
+		"\"messages\": [" + strings.Join(listener.messages, ",\n") + "],\n " +
+		"\"data\": [" + strings.Join(listener.result, ",\n") + "]" +
+		",\n " + strDuration +
+		",\n " + strCount + "}\n")
 }
 func (manager *ClientManager) send(client *Client) {
 	defer client.socket.Close()

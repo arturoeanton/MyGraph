@@ -167,7 +167,6 @@ func (l *r2queryListener) ExitGetElements(c *r2query.GetElementsContext) {
 		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
-	i := 0
 	for _, v := range c.Arguments().GetChildren() {
 		vv := v.(*antlr.TerminalNodeImpl)
 		if vv.GetSymbol().GetTokenType() == r2query.R2QueryParserSTRING {
@@ -190,12 +189,10 @@ func (l *r2queryListener) ExitGetElements(c *r2query.GetElementsContext) {
 						l.distinct[value] = true
 						l.result = append(l.result, value)
 					}
-					i++
 				}
 			}
 		}
 	}
-	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 // ExitGetElementRelation is called when exiting the GetElementRelation production.
@@ -216,16 +213,13 @@ func (l *r2queryListener) ExitAddElements(c *r2query.AddElementsContext) {
 		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
-	i := 0
 	for _, v := range c.Arguments().GetChildren() {
 		vv := v.(*antlr.TerminalNodeImpl)
 		if vv.GetSymbol().GetTokenType() == r2query.R2QueryParserSTRING {
 			if mr.AddObject(vv.GetText()) {
-				i++
 			}
 		}
 	}
-	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 // ExitDeleteElements is called when exiting the DeleteElements production.
@@ -235,16 +229,13 @@ func (l *r2queryListener) ExitDeleteElements(c *r2query.DeleteElementsContext) {
 		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
-	i := 0
 	for _, v := range c.Arguments().GetChildren() {
 		vv := v.(*antlr.TerminalNodeImpl)
 		if vv.GetSymbol().GetTokenType() == r2query.R2QueryParserSTRING {
 			if mr.RemoveObject(vv.GetText()) {
-				i++
 			}
 		}
 	}
-	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 // ExitAddRelations is called when exiting the AddRelations production.
@@ -254,7 +245,6 @@ func (l *r2queryListener) ExitAddRelations(c *r2query.AddRelationsContext) {
 		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
-	i := 0
 	for _, v0 := range c.Arguments(0).GetChildren() {
 		vv0 := v0.(*antlr.TerminalNodeImpl)
 		if vv0.GetSymbol().GetTokenType() == r2query.R2QueryParserSTRING {
@@ -265,24 +255,20 @@ func (l *r2queryListener) ExitAddRelations(c *r2query.AddRelationsContext) {
 				if vv1.GetSymbol().GetTokenType() == r2query.R2QueryParserSTRING {
 					if op1 == r2query.R2QueryParserDIRECTION_REL_L && op2 == r2query.R2QueryParserDIRECTION_REL_R {
 						mr.RelationBi(vv0.GetText(), c.Rel().GetTag().GetText(), vv1.GetText())
-						i++
 						continue
 					}
 					if op1 == r2query.R2QueryParserDIRECTION_REL_L && op2 == r2query.R2QueryLexerMIDDLE {
 						mr.RelationL(vv0.GetText(), c.Rel().GetTag().GetText(), vv1.GetText())
-						i++
 						continue
 					}
 					if op1 == r2query.R2QueryParserDIRECTION_REL_R && op2 == r2query.R2QueryLexerMIDDLE {
 						mr.RelationR(vv0.GetText(), c.Rel().GetTag().GetText(), vv1.GetText())
-						i++
 						continue
 					}
 				}
 			}
 		}
 	}
-	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 // ExitDeleteRelations is called when exiting the DeleteRelations production.
