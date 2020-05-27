@@ -1,4 +1,4 @@
-// Code generated from /Users/arturoeliasanton/go/src/r2Server/R2Query.g4 by ANTLR 4.8. DO NOT EDIT.
+// Code generated from /Users/arturoeliasanton/github/arturoeanton/MyGraph/R2Query.g4 by ANTLR 4.8. DO NOT EDIT.
 
 package r2query // R2Query
 import (
@@ -16,49 +16,52 @@ var _ = strconv.Itoa
 
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 17, 80, 4, 
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 20, 86, 4, 
 	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7, 3, 
 	2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 7, 3, 21, 10, 3, 12, 3, 14, 3, 24, 11, 
-	3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 5, 4, 35, 10, 
-	4, 3, 5, 3, 5, 3, 5, 3, 5, 3, 5, 3, 6, 3, 6, 3, 6, 7, 6, 45, 10, 6, 12, 
-	6, 14, 6, 48, 11, 6, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 
+	3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 
+	4, 3, 4, 3, 4, 3, 4, 5, 4, 41, 10, 4, 3, 5, 3, 5, 3, 5, 3, 5, 3, 5, 3, 
+	6, 3, 6, 3, 6, 7, 6, 51, 10, 6, 12, 6, 14, 6, 54, 11, 6, 3, 7, 3, 7, 3, 
 	7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 
-	7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 5, 7, 78, 10, 7, 3, 7, 2, 
-	2, 8, 2, 4, 6, 8, 10, 12, 2, 2, 2, 84, 2, 14, 3, 2, 2, 2, 4, 17, 3, 2, 
-	2, 2, 6, 34, 3, 2, 2, 2, 8, 36, 3, 2, 2, 2, 10, 41, 3, 2, 2, 2, 12, 77, 
-	3, 2, 2, 2, 14, 15, 5, 12, 7, 2, 15, 16, 7, 2, 2, 3, 16, 3, 3, 2, 2, 2, 
-	17, 22, 7, 17, 2, 2, 18, 19, 7, 10, 2, 2, 19, 21, 7, 17, 2, 2, 20, 18, 
-	3, 2, 2, 2, 21, 24, 3, 2, 2, 2, 22, 20, 3, 2, 2, 2, 22, 23, 3, 2, 2, 2, 
-	23, 5, 3, 2, 2, 2, 24, 22, 3, 2, 2, 2, 25, 26, 7, 12, 2, 2, 26, 27, 7, 
-	17, 2, 2, 27, 35, 7, 13, 2, 2, 28, 29, 7, 14, 2, 2, 29, 30, 7, 17, 2, 2, 
-	30, 35, 7, 12, 2, 2, 31, 32, 7, 14, 2, 2, 32, 33, 7, 17, 2, 2, 33, 35, 
-	7, 13, 2, 2, 34, 25, 3, 2, 2, 2, 34, 28, 3, 2, 2, 2, 34, 31, 3, 2, 2, 2, 
-	35, 7, 3, 2, 2, 2, 36, 37, 7, 3, 2, 2, 37, 38, 5, 6, 4, 2, 38, 39, 5, 4, 
-	3, 2, 39, 40, 7, 4, 2, 2, 40, 9, 3, 2, 2, 2, 41, 46, 5, 8, 5, 2, 42, 43, 
-	7, 10, 2, 2, 43, 45, 5, 8, 5, 2, 44, 42, 3, 2, 2, 2, 45, 48, 3, 2, 2, 2, 
-	46, 44, 3, 2, 2, 2, 46, 47, 3, 2, 2, 2, 47, 11, 3, 2, 2, 2, 48, 46, 3, 
-	2, 2, 2, 49, 50, 7, 5, 2, 2, 50, 78, 7, 15, 2, 2, 51, 52, 7, 6, 2, 2, 52, 
-	78, 7, 15, 2, 2, 53, 54, 7, 15, 2, 2, 54, 55, 7, 11, 2, 2, 55, 78, 5, 4, 
-	3, 2, 56, 57, 7, 15, 2, 2, 57, 58, 7, 11, 2, 2, 58, 78, 5, 10, 6, 2, 59, 
-	60, 7, 15, 2, 2, 60, 61, 7, 7, 2, 2, 61, 78, 5, 4, 3, 2, 62, 63, 7, 15, 
-	2, 2, 63, 64, 7, 6, 2, 2, 64, 78, 5, 4, 3, 2, 65, 66, 7, 15, 2, 2, 66, 
-	67, 7, 7, 2, 2, 67, 68, 5, 4, 3, 2, 68, 69, 5, 6, 4, 2, 69, 70, 5, 4, 3, 
-	2, 70, 78, 3, 2, 2, 2, 71, 72, 7, 15, 2, 2, 72, 73, 7, 6, 2, 2, 73, 74, 
-	5, 4, 3, 2, 74, 75, 5, 6, 4, 2, 75, 76, 5, 4, 3, 2, 76, 78, 3, 2, 2, 2, 
-	77, 49, 3, 2, 2, 2, 77, 51, 3, 2, 2, 2, 77, 53, 3, 2, 2, 2, 77, 56, 3, 
-	2, 2, 2, 77, 59, 3, 2, 2, 2, 77, 62, 3, 2, 2, 2, 77, 65, 3, 2, 2, 2, 77, 
-	71, 3, 2, 2, 2, 78, 13, 3, 2, 2, 2, 6, 22, 34, 46, 77,
+	7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 
+	7, 3, 7, 5, 7, 84, 10, 7, 3, 7, 2, 2, 8, 2, 4, 6, 8, 10, 12, 2, 2, 2, 90, 
+	2, 14, 3, 2, 2, 2, 4, 17, 3, 2, 2, 2, 6, 40, 3, 2, 2, 2, 8, 42, 3, 2, 2, 
+	2, 10, 47, 3, 2, 2, 2, 12, 83, 3, 2, 2, 2, 14, 15, 5, 12, 7, 2, 15, 16, 
+	7, 2, 2, 3, 16, 3, 3, 2, 2, 2, 17, 22, 7, 20, 2, 2, 18, 19, 7, 12, 2, 2, 
+	19, 21, 7, 20, 2, 2, 20, 18, 3, 2, 2, 2, 21, 24, 3, 2, 2, 2, 22, 20, 3, 
+	2, 2, 2, 22, 23, 3, 2, 2, 2, 23, 5, 3, 2, 2, 2, 24, 22, 3, 2, 2, 2, 25, 
+	26, 7, 14, 2, 2, 26, 27, 7, 3, 2, 2, 27, 28, 7, 18, 2, 2, 28, 29, 7, 4, 
+	2, 2, 29, 41, 7, 15, 2, 2, 30, 31, 7, 16, 2, 2, 31, 32, 7, 3, 2, 2, 32, 
+	33, 7, 18, 2, 2, 33, 34, 7, 4, 2, 2, 34, 41, 7, 14, 2, 2, 35, 36, 7, 16, 
+	2, 2, 36, 37, 7, 3, 2, 2, 37, 38, 7, 18, 2, 2, 38, 39, 7, 4, 2, 2, 39, 
+	41, 7, 15, 2, 2, 40, 25, 3, 2, 2, 2, 40, 30, 3, 2, 2, 2, 40, 35, 3, 2, 
+	2, 2, 41, 7, 3, 2, 2, 2, 42, 43, 7, 5, 2, 2, 43, 44, 5, 6, 4, 2, 44, 45, 
+	5, 4, 3, 2, 45, 46, 7, 6, 2, 2, 46, 9, 3, 2, 2, 2, 47, 52, 5, 8, 5, 2, 
+	48, 49, 7, 12, 2, 2, 49, 51, 5, 8, 5, 2, 50, 48, 3, 2, 2, 2, 51, 54, 3, 
+	2, 2, 2, 52, 50, 3, 2, 2, 2, 52, 53, 3, 2, 2, 2, 53, 11, 3, 2, 2, 2, 54, 
+	52, 3, 2, 2, 2, 55, 56, 7, 7, 2, 2, 56, 84, 7, 17, 2, 2, 57, 58, 7, 8, 
+	2, 2, 58, 84, 7, 17, 2, 2, 59, 60, 7, 17, 2, 2, 60, 61, 7, 13, 2, 2, 61, 
+	84, 5, 4, 3, 2, 62, 63, 7, 17, 2, 2, 63, 64, 7, 13, 2, 2, 64, 84, 5, 10, 
+	6, 2, 65, 66, 7, 17, 2, 2, 66, 67, 7, 9, 2, 2, 67, 84, 5, 4, 3, 2, 68, 
+	69, 7, 17, 2, 2, 69, 70, 7, 8, 2, 2, 70, 84, 5, 4, 3, 2, 71, 72, 7, 17, 
+	2, 2, 72, 73, 7, 9, 2, 2, 73, 74, 5, 4, 3, 2, 74, 75, 5, 6, 4, 2, 75, 76, 
+	5, 4, 3, 2, 76, 84, 3, 2, 2, 2, 77, 78, 7, 17, 2, 2, 78, 79, 7, 8, 2, 2, 
+	79, 80, 5, 4, 3, 2, 80, 81, 5, 6, 4, 2, 81, 82, 5, 4, 3, 2, 82, 84, 3, 
+	2, 2, 2, 83, 55, 3, 2, 2, 2, 83, 57, 3, 2, 2, 2, 83, 59, 3, 2, 2, 2, 83, 
+	62, 3, 2, 2, 2, 83, 65, 3, 2, 2, 2, 83, 68, 3, 2, 2, 2, 83, 71, 3, 2, 2, 
+	2, 83, 77, 3, 2, 2, 2, 84, 13, 3, 2, 2, 2, 6, 22, 40, 52, 83,
 }
 var deserializer = antlr.NewATNDeserializer(nil)
 var deserializedATN = deserializer.DeserializeFromUInt16(parserATN)
 
 var literalNames = []string{
-	"", "'['", "']'", "'CREATE'", "'DELETE'", "'ADD'", "'OR'", "'AND'", "','", 
-	"'GET'", "'-'", "'->'", "'<-'",
+	"", "'['", "']'", "'('", "')'", "'CREATE'", "'DELETE'", "'ADD'", "'OR'", 
+	"'AND'", "','", "'GET'", "'-'", "'->'", "'<-'",
 }
 var symbolicNames = []string{
-	"", "", "", "CREATE", "DELETE", "ADD", "OR", "AND", "COMMA", "GET", "MIDDLE", 
-	"DIRECTION_REL_R", "DIRECTION_REL_L", "GRAPH_NAME", "WHITESPACE", "STRING",
+	"", "", "", "", "", "CREATE", "DELETE", "ADD", "OR", "AND", "COMMA", "GET", 
+	"MIDDLE", "DIRECTION_REL_R", "DIRECTION_REL_L", "GRAPH_NAME", "TAG_NAME", 
+	"WHITESPACE", "STRING",
 }
 
 var ruleNames = []string{
@@ -95,19 +98,22 @@ const (
 	R2QueryParserEOF = antlr.TokenEOF
 	R2QueryParserT__0 = 1
 	R2QueryParserT__1 = 2
-	R2QueryParserCREATE = 3
-	R2QueryParserDELETE = 4
-	R2QueryParserADD = 5
-	R2QueryParserOR = 6
-	R2QueryParserAND = 7
-	R2QueryParserCOMMA = 8
-	R2QueryParserGET = 9
-	R2QueryParserMIDDLE = 10
-	R2QueryParserDIRECTION_REL_R = 11
-	R2QueryParserDIRECTION_REL_L = 12
-	R2QueryParserGRAPH_NAME = 13
-	R2QueryParserWHITESPACE = 14
-	R2QueryParserSTRING = 15
+	R2QueryParserT__2 = 3
+	R2QueryParserT__3 = 4
+	R2QueryParserCREATE = 5
+	R2QueryParserDELETE = 6
+	R2QueryParserADD = 7
+	R2QueryParserOR = 8
+	R2QueryParserAND = 9
+	R2QueryParserCOMMA = 10
+	R2QueryParserGET = 11
+	R2QueryParserMIDDLE = 12
+	R2QueryParserDIRECTION_REL_R = 13
+	R2QueryParserDIRECTION_REL_L = 14
+	R2QueryParserGRAPH_NAME = 15
+	R2QueryParserTAG_NAME = 16
+	R2QueryParserWHITESPACE = 17
+	R2QueryParserSTRING = 18
 )
 
 // R2QueryParser rules.
@@ -463,8 +469,8 @@ func (s *RelContext) MIDDLE() antlr.TerminalNode {
 	return s.GetToken(R2QueryParserMIDDLE, 0)
 }
 
-func (s *RelContext) STRING() antlr.TerminalNode {
-	return s.GetToken(R2QueryParserSTRING, 0)
+func (s *RelContext) TAG_NAME() antlr.TerminalNode {
+	return s.GetToken(R2QueryParserTAG_NAME, 0)
 }
 
 func (s *RelContext) DIRECTION_REL_R() antlr.TerminalNode {
@@ -529,7 +535,7 @@ func (p *R2QueryParser) Rel() (localctx IRelContext) {
 		}
 	}()
 
-	p.SetState(32)
+	p.SetState(38)
 	p.GetErrorHandler().Sync(p)
 	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 1, p.GetParserRuleContext()) {
 	case 1:
@@ -543,13 +549,21 @@ func (p *R2QueryParser) Rel() (localctx IRelContext) {
 		}
 		{
 			p.SetState(24)
+			p.Match(R2QueryParserT__0)
+		}
+		{
+			p.SetState(25)
 
-			var _m = p.Match(R2QueryParserSTRING)
+			var _m = p.Match(R2QueryParserTAG_NAME)
 
 			localctx.(*RelContext).tag = _m
 		}
 		{
-			p.SetState(25)
+			p.SetState(26)
+			p.Match(R2QueryParserT__1)
+		}
+		{
+			p.SetState(27)
 
 			var _m = p.Match(R2QueryParserDIRECTION_REL_R)
 
@@ -561,21 +575,29 @@ func (p *R2QueryParser) Rel() (localctx IRelContext) {
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(26)
+			p.SetState(28)
 
 			var _m = p.Match(R2QueryParserDIRECTION_REL_L)
 
 			localctx.(*RelContext).op1 = _m
 		}
 		{
-			p.SetState(27)
+			p.SetState(29)
+			p.Match(R2QueryParserT__0)
+		}
+		{
+			p.SetState(30)
 
-			var _m = p.Match(R2QueryParserSTRING)
+			var _m = p.Match(R2QueryParserTAG_NAME)
 
 			localctx.(*RelContext).tag = _m
 		}
 		{
-			p.SetState(28)
+			p.SetState(31)
+			p.Match(R2QueryParserT__1)
+		}
+		{
+			p.SetState(32)
 
 			var _m = p.Match(R2QueryParserMIDDLE)
 
@@ -587,21 +609,29 @@ func (p *R2QueryParser) Rel() (localctx IRelContext) {
 	case 3:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(29)
+			p.SetState(33)
 
 			var _m = p.Match(R2QueryParserDIRECTION_REL_L)
 
 			localctx.(*RelContext).op1 = _m
 		}
 		{
-			p.SetState(30)
+			p.SetState(34)
+			p.Match(R2QueryParserT__0)
+		}
+		{
+			p.SetState(35)
 
-			var _m = p.Match(R2QueryParserSTRING)
+			var _m = p.Match(R2QueryParserTAG_NAME)
 
 			localctx.(*RelContext).tag = _m
 		}
 		{
-			p.SetState(31)
+			p.SetState(36)
+			p.Match(R2QueryParserT__1)
+		}
+		{
+			p.SetState(37)
 
 			var _m = p.Match(R2QueryParserDIRECTION_REL_R)
 
@@ -756,11 +786,11 @@ func (p *R2QueryParser) Relation() (localctx IRelationContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(34)
-		p.Match(R2QueryParserT__0)
+		p.SetState(40)
+		p.Match(R2QueryParserT__2)
 	}
 	{
-		p.SetState(35)
+		p.SetState(41)
 
 		var _x = p.Rel()
 
@@ -768,7 +798,7 @@ func (p *R2QueryParser) Relation() (localctx IRelationContext) {
 		localctx.(*RelationContext).r = _x
 	}
 	{
-		p.SetState(36)
+		p.SetState(42)
 
 		var _x = p.Arguments()
 
@@ -776,8 +806,8 @@ func (p *R2QueryParser) Relation() (localctx IRelationContext) {
 		localctx.(*RelationContext).arg = _x
 	}
 	{
-		p.SetState(37)
-		p.Match(R2QueryParserT__1)
+		p.SetState(43)
+		p.Match(R2QueryParserT__3)
 	}
 
 
@@ -913,26 +943,26 @@ func (p *R2QueryParser) Relations() (localctx IRelationsContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(39)
+		p.SetState(45)
 		p.Relation()
 	}
-	p.SetState(44)
+	p.SetState(50)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 
 	for _la == R2QueryParserCOMMA {
 		{
-			p.SetState(40)
+			p.SetState(46)
 			p.Match(R2QueryParserCOMMA)
 		}
 		{
-			p.SetState(41)
+			p.SetState(47)
 			p.Relation()
 		}
 
 
-		p.SetState(46)
+		p.SetState(52)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
@@ -1523,18 +1553,18 @@ func (p *R2QueryParser) Expression() (localctx IExpressionContext) {
 		}
 	}()
 
-	p.SetState(75)
+	p.SetState(81)
 	p.GetErrorHandler().Sync(p)
 	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 3, p.GetParserRuleContext()) {
 	case 1:
 		localctx = NewCreateGraphContext(p, localctx)
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(47)
+			p.SetState(53)
 			p.Match(R2QueryParserCREATE)
 		}
 		{
-			p.SetState(48)
+			p.SetState(54)
 			p.Match(R2QueryParserGRAPH_NAME)
 		}
 
@@ -1543,11 +1573,11 @@ func (p *R2QueryParser) Expression() (localctx IExpressionContext) {
 		localctx = NewDeleteGraphContext(p, localctx)
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(49)
+			p.SetState(55)
 			p.Match(R2QueryParserDELETE)
 		}
 		{
-			p.SetState(50)
+			p.SetState(56)
 			p.Match(R2QueryParserGRAPH_NAME)
 		}
 
@@ -1556,15 +1586,15 @@ func (p *R2QueryParser) Expression() (localctx IExpressionContext) {
 		localctx = NewGetElementsContext(p, localctx)
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(51)
+			p.SetState(57)
 			p.Match(R2QueryParserGRAPH_NAME)
 		}
 		{
-			p.SetState(52)
+			p.SetState(58)
 			p.Match(R2QueryParserGET)
 		}
 		{
-			p.SetState(53)
+			p.SetState(59)
 			p.Arguments()
 		}
 
@@ -1573,15 +1603,15 @@ func (p *R2QueryParser) Expression() (localctx IExpressionContext) {
 		localctx = NewGetElementRelationContext(p, localctx)
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(54)
+			p.SetState(60)
 			p.Match(R2QueryParserGRAPH_NAME)
 		}
 		{
-			p.SetState(55)
+			p.SetState(61)
 			p.Match(R2QueryParserGET)
 		}
 		{
-			p.SetState(56)
+			p.SetState(62)
 			p.Relations()
 		}
 
@@ -1589,40 +1619,6 @@ func (p *R2QueryParser) Expression() (localctx IExpressionContext) {
 	case 5:
 		localctx = NewAddElementsContext(p, localctx)
 		p.EnterOuterAlt(localctx, 5)
-		{
-			p.SetState(57)
-			p.Match(R2QueryParserGRAPH_NAME)
-		}
-		{
-			p.SetState(58)
-			p.Match(R2QueryParserADD)
-		}
-		{
-			p.SetState(59)
-			p.Arguments()
-		}
-
-
-	case 6:
-		localctx = NewDeleteElementsContext(p, localctx)
-		p.EnterOuterAlt(localctx, 6)
-		{
-			p.SetState(60)
-			p.Match(R2QueryParserGRAPH_NAME)
-		}
-		{
-			p.SetState(61)
-			p.Match(R2QueryParserDELETE)
-		}
-		{
-			p.SetState(62)
-			p.Arguments()
-		}
-
-
-	case 7:
-		localctx = NewAddRelationsContext(p, localctx)
-		p.EnterOuterAlt(localctx, 7)
 		{
 			p.SetState(63)
 			p.Match(R2QueryParserGRAPH_NAME)
@@ -1635,26 +1631,35 @@ func (p *R2QueryParser) Expression() (localctx IExpressionContext) {
 			p.SetState(65)
 			p.Arguments()
 		}
+
+
+	case 6:
+		localctx = NewDeleteElementsContext(p, localctx)
+		p.EnterOuterAlt(localctx, 6)
 		{
 			p.SetState(66)
-			p.Rel()
+			p.Match(R2QueryParserGRAPH_NAME)
 		}
 		{
 			p.SetState(67)
+			p.Match(R2QueryParserDELETE)
+		}
+		{
+			p.SetState(68)
 			p.Arguments()
 		}
 
 
-	case 8:
-		localctx = NewDeleteRelationsContext(p, localctx)
-		p.EnterOuterAlt(localctx, 8)
+	case 7:
+		localctx = NewAddRelationsContext(p, localctx)
+		p.EnterOuterAlt(localctx, 7)
 		{
 			p.SetState(69)
 			p.Match(R2QueryParserGRAPH_NAME)
 		}
 		{
 			p.SetState(70)
-			p.Match(R2QueryParserDELETE)
+			p.Match(R2QueryParserADD)
 		}
 		{
 			p.SetState(71)
@@ -1666,6 +1671,31 @@ func (p *R2QueryParser) Expression() (localctx IExpressionContext) {
 		}
 		{
 			p.SetState(73)
+			p.Arguments()
+		}
+
+
+	case 8:
+		localctx = NewDeleteRelationsContext(p, localctx)
+		p.EnterOuterAlt(localctx, 8)
+		{
+			p.SetState(75)
+			p.Match(R2QueryParserGRAPH_NAME)
+		}
+		{
+			p.SetState(76)
+			p.Match(R2QueryParserDELETE)
+		}
+		{
+			p.SetState(77)
+			p.Arguments()
+		}
+		{
+			p.SetState(78)
+			p.Rel()
+		}
+		{
+			p.SetState(79)
 			p.Arguments()
 		}
 

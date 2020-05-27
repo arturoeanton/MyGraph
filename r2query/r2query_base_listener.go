@@ -1,4 +1,4 @@
-// Code generated from /Users/arturoeliasanton/go/src/r2Server/R2Query.g4 by ANTLR 4.8. DO NOT EDIT.
+// Code generated from /Users/arturoeliasanton/github/arturoeanton/MyGraph/R2Query.g4 by ANTLR 4.8. DO NOT EDIT.
 
 package r2query // R2Query
 import "github.com/antlr/antlr4/runtime/Go/antlr"

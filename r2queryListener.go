@@ -12,9 +12,10 @@ import (
 type r2queryListener struct {
 	manager *ClientManager
 	*r2query.BaseR2QueryListener
-	rm *RelationManager
+	rm       *RelationManager
 	distinct map[string]bool
-	result string
+	result   []string
+	messages   []string
 }
 
 // ExitStart is called when exiting the start production.
@@ -26,13 +27,19 @@ func (l *r2queryListener) ExitArguments(c *r2query.ArgumentsContext) {}
 // ExitRel is called when exiting the rel production.
 func (l *r2queryListener) ExitRel(c *r2query.RelContext) {}
 
+func valueFormatter(element1, element2, tag, direction string) string {
+	return fmt.Sprintf(
+		"{\"element1\":%s, \"element2\":%s, \"tag\":\"%s\", \"direction\":\"%s\"}",
+		element1, element2, tag, direction)
+}
+
 // EnterRelation is called when entering the relation production.
 func (l *r2queryListener) EnterRelation(c *r2query.RelationContext) {
 	//for j:= 0; j< c.Relations().GetChildCount();j=j+3 {
-	tag  := c.GetR().GetTag().GetText()
+	tag := c.GetR().GetTag().GetText()
 	//c.GetParent().(*r2query.RelationsContext).GetParent().(*r2query.GetElementRelationContext).GRAPH_NAME()
 
-	if c.GetR().GetOp1().GetTokenType() == r2query.R2QueryParserDIRECTION_REL_L &&  c.GetR().GetOp2().GetTokenType() == r2query.R2QueryParserDIRECTION_REL_R {
+	if c.GetR().GetOp1().GetTokenType() == r2query.R2QueryParserDIRECTION_REL_L && c.GetR().GetOp2().GetTokenType() == r2query.R2QueryParserDIRECTION_REL_R {
 		for _, term := range c.GetArg().(*r2query.ArgumentsContext).AllSTRING() {
 			element := term.GetText()
 			for _, item := range l.rm.GetElementAll(l.rm.objects[element].relations[tag]) {
@@ -41,12 +48,12 @@ func (l *r2queryListener) EnterRelation(c *r2query.RelationContext) {
 					continue
 				}
 				if mset.Contains(l.rm.ids[element]) {
-					value := fmt.Sprintln("(", item, "<-", tag, "->", element, ")")
-					if _,ok :=  l.distinct[value]; !ok {
-						value2 := fmt.Sprintln("(", element, "<-", tag, "->", item, ")")
-						if _,ok :=  l.distinct[value2]; !ok {
+					value := valueFormatter(item, element, tag, "<->")
+					if _, ok := l.distinct[value]; !ok {
+						value2 := valueFormatter(element, item, tag, "<->")
+						if _, ok := l.distinct[value2]; !ok {
 							l.distinct[value] = true
-							l.result += value
+							l.result = append(l.result, value)
 						}
 					}
 					continue
@@ -63,23 +70,23 @@ func (l *r2queryListener) EnterRelation(c *r2query.RelationContext) {
 				mset, ok := l.rm.objects[item].relations[tag]
 				if ok {
 					if mset.Contains(l.rm.ids[element]) {
-						value := fmt.Sprintln("(", item, "<-", tag, "->", element, ")")
-						if _,ok :=  l.distinct[value]; !ok {
-							value2 := fmt.Sprintln("(", element, "<-", tag, "->", item, ")")
-							if _,ok :=  l.distinct[value2]; !ok {
+						value := valueFormatter(item, element, tag, "<->")
+						if _, ok := l.distinct[value]; !ok {
+							value2 := valueFormatter(element, item, tag, "<->")
+							if _, ok := l.distinct[value2]; !ok {
 								l.distinct[value] = true
-								l.result += value
+								l.result = append(l.result, value)
 							}
 						}
 						continue
 					}
 				}
-				value := fmt.Sprintln("(", item, "<-", tag, "-", element, ")")
-				if _,ok :=  l.distinct[value]; !ok {
-					value2 := fmt.Sprintln("(", element, "-", tag, "->", item, ")")
-					if _,ok :=  l.distinct[value2]; !ok {
+				value := valueFormatter(item, element, tag, "<-")
+				if _, ok := l.distinct[value]; !ok {
+					value2 := valueFormatter(element, item, tag, "->")
+					if _, ok := l.distinct[value2]; !ok {
 						l.distinct[value] = true
-						l.result += value
+						l.result = append(l.result, value)
 					}
 				}
 				continue
@@ -89,30 +96,30 @@ func (l *r2queryListener) EnterRelation(c *r2query.RelationContext) {
 	}
 
 	if c.GetR().GetOp1().GetTokenType() == r2query.R2QueryParserDIRECTION_REL_R {
-		tagReverse := "_INTERNAL@[REVERSE-HIDE]-"+tag
+		tagReverse := "_INTERNAL@[REVERSE-HIDE]-" + tag
 		for _, term := range c.GetArg().(*r2query.ArgumentsContext).AllSTRING() {
 			element := term.GetText()
 			for _, item := range l.rm.GetElementAll(l.rm.objects[element].relations[tagReverse]) {
 				mset, ok := l.rm.objects[element].relations[tag]
 				if ok {
 					if mset.Contains(l.rm.ids[item]) {
-						value := fmt.Sprintln("(", item, "<-", tag, "->", element, ")")
-						if _,ok :=  l.distinct[value]; !ok {
-							value2 := fmt.Sprintln("(", element, "<-", tag, "->", item, ")")
-							if _,ok :=  l.distinct[value2]; !ok {
+						value := valueFormatter(item, element, tag, "<->")
+						if _, ok := l.distinct[value]; !ok {
+							value2 := valueFormatter(element, item, tag, "<->")
+							if _, ok := l.distinct[value2]; !ok {
 								l.distinct[value] = true
-								l.result += value
+								l.result = append(l.result, value)
 							}
 						}
 						continue
 					}
 				}
-				value := fmt.Sprintln("(", item, "-", tag, "->", element, ")")
-				if _,ok :=  l.distinct[value]; !ok {
-					value2 := fmt.Sprintln("(", element, "<-", tag, "-", item, ")")
-					if _,ok :=  l.distinct[value2]; !ok {
+				value := valueFormatter(item, element, tag, "->")
+				if _, ok := l.distinct[value]; !ok {
+					value2 := valueFormatter(element, item, tag, "<-")
+					if _, ok := l.distinct[value2]; !ok {
 						l.distinct[value] = true
-						l.result += value
+						l.result = append(l.result, value)
 					}
 				}
 				continue
@@ -133,11 +140,11 @@ func (l *r2queryListener) ExitCreateGraph(c *r2query.CreateGraphContext) {
 		graph = make(map[string]RelationManager)
 	}
 	if _, ok := graph[c.GRAPH_NAME().GetText()]; ok {
-		l.result += c.GRAPH_NAME().GetText() + " \n{Exist}\n"
+		l.messages = append(l.result, "\"EXIST GRAPH OK\"")
 		return
 	}
 	graph[c.GRAPH_NAME().GetText()] = NewRelationManager()
-	l.result +=c.GRAPH_NAME().GetText() + " \n{CREATE OK}\n"
+	l.messages = append(l.messages, "\"CREATE GRAPH OK\"")
 }
 
 // ExitDeleteGraph is called when exiting the DeleteGraph production.
@@ -147,17 +154,17 @@ func (l *r2queryListener) ExitDeleteGraph(c *r2query.DeleteGraphContext) {
 	}
 	if _, ok := graph[c.GRAPH_NAME().GetText()]; ok {
 		delete(graph, c.GRAPH_NAME().GetText())
-		l.result +=c.GRAPH_NAME().GetText() + "\n{Delete ok}\n"
+		l.messages = append(l.messages,"\"DELETE GRAPH OK\"")
 		return
 	}
-	l.result +=c.GRAPH_NAME().GetText() + " \n{Not Exist ok}\n"
+	l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 }
 
 // ExitGetElements is called when exiting the GetElements production.
 func (l *r2queryListener) ExitGetElements(c *r2query.GetElementsContext) {
 	mr, ok := graph[c.GRAPH_NAME().GetText()]
 	if !ok {
-		l.result +=c.GRAPH_NAME().GetText() + "\n{Graph  no exist}\n"
+		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
 	i := 0
@@ -170,34 +177,33 @@ func (l *r2queryListener) ExitGetElements(c *r2query.GetElementsContext) {
 					continue
 				}
 				for _, e2 := range mr.GetElementAll(r) {
-					rel1 := "-"
+					rel1 := ""
 					rel2 := "->"
-					mset , ok :=  mr.objects[e2].relations[tag]
-					if ok{
+					mset, ok := mr.objects[e2].relations[tag]
+					if ok {
 						if mset.Contains(mr.ids[e1]) {
-							rel1 = "<-"
+							rel1 = "<"
 						}
 					}
-					value := fmt.Sprintln("(",e1 , rel1, tag, rel2, e2, ")")
-					if _,ok :=  l.distinct[value]; !ok {
+					value := valueFormatter(e1, e2, tag, rel1+rel2)
+					if _, ok := l.distinct[value]; !ok {
 						l.distinct[value] = true
-						l.result += value
+						l.result = append(l.result, value)
 					}
 					i++
 				}
 			}
 		}
 	}
-	l.result +=fmt.Sprintln("{", i, " Count}")
+	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
-
 
 // ExitGetElementRelation is called when exiting the GetElementRelation production.
 func (l *r2queryListener) EnterGetElementRelation(c *r2query.GetElementRelationContext) {
 	mr, ok := graph[c.GRAPH_NAME().GetText()]
 	if !ok {
-		l.result +=c.GRAPH_NAME().GetText() + "\n{Graph  no exist}\n"
-		panic("\n{Graph  no exist}\n")
+		l.messages = append(l.messages,"\"GRAPH NOT FOUND \"")
+		panic("\"GRAPH NOT FOUND \"")
 	}
 	l.rm = &mr
 	//i := 0
@@ -207,7 +213,7 @@ func (l *r2queryListener) EnterGetElementRelation(c *r2query.GetElementRelationC
 func (l *r2queryListener) ExitAddElements(c *r2query.AddElementsContext) {
 	mr, ok := graph[c.GRAPH_NAME().GetText()]
 	if !ok {
-		l.result +=c.GRAPH_NAME().GetText() + "\n{Graph  no exist}\n"
+		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
 	i := 0
@@ -219,14 +225,14 @@ func (l *r2queryListener) ExitAddElements(c *r2query.AddElementsContext) {
 			}
 		}
 	}
-	l.result +=fmt.Sprintln("{", i, " Count}")
+	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 // ExitDeleteElements is called when exiting the DeleteElements production.
 func (l *r2queryListener) ExitDeleteElements(c *r2query.DeleteElementsContext) {
 	mr, ok := graph[c.GRAPH_NAME().GetText()]
 	if !ok {
-		l.result +=c.GRAPH_NAME().GetText() + "\n{Graph  no exist}\n"
+		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
 	i := 0
@@ -238,14 +244,14 @@ func (l *r2queryListener) ExitDeleteElements(c *r2query.DeleteElementsContext) {
 			}
 		}
 	}
-	l.result +=fmt.Sprintln("{", i, " Count}")
+	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 // ExitAddRelations is called when exiting the AddRelations production.
 func (l *r2queryListener) ExitAddRelations(c *r2query.AddRelationsContext) {
 	mr, ok := graph[c.GRAPH_NAME().GetText()]
 	if !ok {
-		l.result +=c.GRAPH_NAME().GetText() + "\n{Graph  no exist}\n"
+		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
 	i := 0
@@ -256,7 +262,6 @@ func (l *r2queryListener) ExitAddRelations(c *r2query.AddRelationsContext) {
 			op2 := c.Rel().GetOp2().GetTokenType()
 			for _, v1 := range c.Arguments(1).GetChildren() {
 				vv1 := v1.(*antlr.TerminalNodeImpl)
-				fmt.Println(vv1.GetText())
 				if vv1.GetSymbol().GetTokenType() == r2query.R2QueryParserSTRING {
 					if op1 == r2query.R2QueryParserDIRECTION_REL_L && op2 == r2query.R2QueryParserDIRECTION_REL_R {
 						mr.RelationBi(vv0.GetText(), c.Rel().GetTag().GetText(), vv1.GetText())
@@ -277,14 +282,14 @@ func (l *r2queryListener) ExitAddRelations(c *r2query.AddRelationsContext) {
 			}
 		}
 	}
-	l.result +=fmt.Sprintln("{", i, " Count}")
+	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 // ExitDeleteRelations is called when exiting the DeleteRelations production.
 func (l *r2queryListener) ExitDeleteRelations(c *r2query.DeleteRelationsContext) {
 	mr, ok := graph[c.GRAPH_NAME().GetText()]
 	if !ok {
-		l.result +=c.GRAPH_NAME().GetText() + "\n{Graph  no exist}\n"
+		l.messages = append(l.messages, "\"GRAPH NOT FOUND \"")
 		return
 	}
 	i := 0
@@ -300,15 +305,15 @@ func (l *r2queryListener) ExitDeleteRelations(c *r2query.DeleteRelationsContext)
 			}
 		}
 	}
-	l.result +=fmt.Sprintln("{", i, " Count}")
+	l.messages = append(l.messages, fmt.Sprint("\"", i, " Count\""))
 }
 
 func (l *r2queryListener) execute(cmd string) {
 	defer func() {
 		if r := recover(); r != nil {
-			str := fmt.Sprintln("Recovered in R2QueryParser", r)
-			l.result +=str
-			log.Println(str)
+			str := fmt.Sprint("Recovered in R2QueryParser", r)
+			l.messages = append(l.messages, "\""+str+"\"")
+			log.Print(str)
 		}
 	}()
 	is := antlr.NewInputStream(cmd)

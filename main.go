@@ -84,12 +84,10 @@ func (manager *ClientManager)analyze(source *Client, message []byte) {
 	modTime := time.Now()
 	listener.execute(string(message))
 	since := time.Since(modTime)
-	listener.result += fmt.Sprintln("{",since,"}")
-	source.data <- []byte(listener.result)
-
-	//str := fmt.Sprintf("%d\n", listener.pop())
-	//source.data <- []byte(str)
-	//manager.broadcast <- &Broadcast{source: source, message: message}
+	strDuration := fmt.Sprintln ("\"duration\":\"", since, "\"")
+	source.data <- []byte("{" +
+		"\"messages\": [\n"+ strings.Join(listener.messages,",\n")+ "\n],\n " +
+		"\"data\": [\n"+ strings.Join(listener.result,",\n")+ "\n],\n "+strDuration+ "}\n")
 }
 func (manager *ClientManager) send(client *Client) {
 	defer client.socket.Close()
