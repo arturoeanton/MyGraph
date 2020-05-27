@@ -1,11 +1,11 @@
 // R2Query.g4
 grammar R2Query;
 
-CREATE: 'CREATE';
-DELETE: 'DELETE';
-ADD: 'ADD';
+CREATE: C R E A T E;
+DELETE: D E L E T E;
+ADD: A D D;
 COMMA: ',';
-GET: 'GET';
+GET: G E T ;
 MIDDLE: '-';
 DIRECTION_REL_R: '->';
 DIRECTION_REL_L: '<-';
@@ -45,6 +45,32 @@ expression
     | GRAPH_NAME DELETE arguments rel arguments      # DeleteRelations
     ;
 
+fragment A : [aA];
+fragment B : [bB];
+fragment C : [cC];
+fragment D : [dD];
+fragment E : [eE];
+fragment F : [fF];
+fragment G : [gG];
+fragment H : [hH];
+fragment I : [iI];
+fragment J : [jJ];
+fragment K : [kK];
+fragment L : [lL];
+fragment M : [mM];
+fragment N : [nN];
+fragment O : [oO];
+fragment P : [pP];
+fragment Q : [qQ];
+fragment R : [rR];
+fragment S : [sS];
+fragment T : [tT];
+fragment U : [uU];
+fragment V : [vV];
+fragment W : [wW];
+fragment X : [xX];
+fragment Y : [yY];
+fragment Z : [zZ];
 /*
 CREATE G1
 G1 ADD "NODE1"

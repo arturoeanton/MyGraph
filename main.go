@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -105,6 +106,31 @@ func (manager *ClientManager) send(client *Client) {
 		}
 	}
 }
+
+func httpQuery(w http.ResponseWriter, r *http.Request) {
+
+	listener := r2queryListener{}
+	cmd := r.URL.Query().Get("cmd")
+	modTime := time.Now()
+	listener.execute(cmd)
+	since := time.Since(modTime)
+	strDuration := fmt.Sprint("\"duration\":\"", since, "\"")
+	strCount := fmt.Sprintln("\"count\":", len(listener.result))
+	result := "{" +
+		"\"messages\": [" + strings.Join(listener.messages, ",\n") + "],\n " +
+		"\"data\": [" + strings.Join(listener.result, ",\n") + "]" +
+		",\n " + strDuration +
+		",\n " + strCount + "}\n"
+
+	fmt.Fprintf(w, result)
+	log.Println("Endpoint Hit: homePage")
+}
+
+func serverHttp() {
+	http.HandleFunc("/query", httpQuery)
+	log.Fatal(http.ListenAndServe(":5000", nil))
+}
+
 func main() {
 	address := os.Getenv("R2_ADDRESS")
 	if address == "" {
@@ -121,6 +147,9 @@ func main() {
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
 	}
+
+	go serverHttp()
+
 	go manager.start()
 	for {
 		connection, err := listener.Accept()
